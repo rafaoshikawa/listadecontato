@@ -1,5 +1,15 @@
-import ReactDOM from "react-dom/client";
-import App from "./App.jsx";
+import { createRoot } from "react-dom"; // Importe createRoot em vez de ReactDOM.render
+import { Provider } from "react-redux";
+import store from "./redux/store/store";
 import "./index.css";
+import "./global.css";
 
-ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+import App from "./App";
+
+const root = createRoot(document.getElementById("root")); // Use createRoot para criar o root
+
+root.render(
+  <Provider store={store}>
+    <App />
+  </Provider>
+);

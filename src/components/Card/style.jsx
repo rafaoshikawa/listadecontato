@@ -1,10 +1,16 @@
 import styled from "styled-components";
 
+const colors = {
+  card: "#242424",
+  text: "#ffffffde",
+  bg: "#3B3B98",
+};
+
 export const Container = styled.div`
   width: 400px;
   height: auto;
   border-radius: 8px;
-  background-color: var(--colorCard);
+  background-color: ${colors.card};
   box-shadow: -3px 17px 43px -7px rgba(0, 0, 0, 0.75);
   -webkit-box-shadow: -3px 17px 43px -7px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: -3px 17px 43px -7px rgba(0, 0, 0, 0.75);
@@ -20,7 +26,7 @@ export const Container = styled.div`
 export const Tittle = styled.h1`
   padding-top: 20px;
   font-size: 1.5rem;
-  color: var(--colorText);
+  color: ${colors.text};
 `;
 
 export const Form = styled.form`
@@ -31,11 +37,11 @@ export const Input = styled.input`
   align-items: center;
   justify-content: center;
   background-color: transparent;
-  border: 3px solid var(--colorBg);
+  border: 3px solid ${colors.bg};
   height: 33px;
   width: 94%;
   padding-left: 20px;
-  color: var(--colorText);
+  color: ${colors.text};
   font-size: 1rem;
   &:focus {
     box-shadow: 0 0 0 0;
@@ -47,16 +53,16 @@ export const Input = styled.input`
 `;
 
 export const Button = styled.button`
-  background-color: var(--colorBg);
-  border: 3px solid var(--colorBg);
+  background-color: ${colors.bg};
+  border: 3px solid ${colors.bg};
   height: 37px;
   width: 100%;
-  color: var(--colorText);
+  color: ${colors.text};
   font-size: 1rem;
 
   &:hover {
     cursor: pointer;
-    border: 3px solid var(--colorBg);
+    border: 3px solid ${colors.bg};
     background-color: #3b3b985f;
   }
   @media (max-width: 800px) {
@@ -68,7 +74,7 @@ export const ContactContainer = styled.div`
   display: grid;
   align-items: center;
   justify-content: center;
-  background-color: var(--colorBg);
+  background-color: ${colors.bg};
   padding: 10px;
   margin-top: 20px;
   margin-bottom: 10px;
@@ -82,7 +88,7 @@ export const ContactContainer = styled.div`
   p {
     margin-top: 10px;
     font-size: 1.4rem;
-    color: var(--colorText);
+    color: ${colors.text};
     @media (max-width: 800px) {
       font-size: 90%;
     }

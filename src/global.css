@@ -1,9 +1,6 @@
 /* variables */
-
-:root {
-  --colorText: #ffffffde;
-  --colorCard: #242424;
-  --colorBg: #3B3B98;
+body {
+  background-color: #242424;
 }
 
 * {

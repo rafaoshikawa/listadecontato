@@ -1,20 +1,30 @@
+// src/components/card/index.jsx
+
 import { useState } from "react";
-import * as Styled from "./style";
+import { useDispatch, useSelector } from "react-redux"; // Importe useDispatch e useSelector
+import * as Styled from "./style.jsx"; // Importe seus estilos
 import Delete from "../../assets/delete.svg";
 import Edit from "../../assets/edit.svg";
 import Done from "../../assets/done.svg";
+import {
+  addContact,
+  deleteContact,
+  editContact,
+} from "../redux/actions/contactActions"; // Importe as actions necessárias
 
 function Contact() {
-  const [contacts, setContacts] = useState([]); // Estado para armazenar os contatos
-  const [name, setName] = useState(""); // Estado para armazenar o nome digitado pelo usuário
-  const [email, setEmail] = useState(""); // Estado para armazenar o email digitado pelo usuário
-  const [phone, setPhone] = useState(""); // Estado para armazenar o telefone digitado pelo usuário
-  const [isEditing, setIsEditing] = useState(false); // Estado para controlar se está editando um contato
-  const [editedIndex, setEditedIndex] = useState(null); // Estado para armazenar o índice do contato sendo editado
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedIndex, setEditedIndex] = useState(null);
+
+  const dispatch = useDispatch(); // Obtenha a função dispatch
+
+  const contacts = useSelector((state) => state.contacts); // Obtenha os contatos do estado Redux
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Verifica se o valor não está vazio antes de adicionar aos contatos
     if (name.trim() !== "" && email.trim() !== "" && phone.trim() !== "") {
       const newContact = {
         name: name,
@@ -22,17 +32,12 @@ function Contact() {
         phone: phone,
       };
       if (isEditing) {
-        // Se estiver editando, atualiza o contato existente
-        const updatedContacts = [...contacts];
-        updatedContacts[editedIndex] = newContact;
-        setContacts(updatedContacts);
+        dispatch(editContact(editedIndex, newContact)); // Despache a action de edição
         setIsEditing(false);
         setEditedIndex(null);
       } else {
-        // Caso contrário, adiciona um novo contato
-        setContacts([...contacts, newContact]); // Adiciona o novo contato ao array de contatos
+        dispatch(addContact(newContact)); // Despache a action de adição
       }
-      // Limpa os campos de input após o envio do formulário
       setName("");
       setEmail("");
       setPhone("");
@@ -40,18 +45,16 @@ function Contact() {
   };
 
   const handleDeleteContact = (index) => {
-    const updatedContacts = [...contacts];
-    updatedContacts.splice(index, 1); // Remove o contato correspondente do array de contatos
-    setContacts(updatedContacts); // Atualiza o estado com a lista de contatos atualizada
+    dispatch(deleteContact(index));
   };
 
   const handleEditContact = (index) => {
     const contact = contacts[index];
-    setName(contact.name); // Define o valor do campo de nome como o valor atual do contato
-    setEmail(contact.email); // Define o valor do campo de email como o valor atual do contato
-    setPhone(contact.phone); // Define o valor do campo de telefone como o valor atual do contato
-    setIsEditing(true); // Define o estado de edição como verdadeiro
-    setEditedIndex(index); // Define o índice do contato sendo editado
+    setName(contact.name);
+    setEmail(contact.email);
+    setPhone(contact.phone);
+    setIsEditing(true);
+    setEditedIndex(index);
   };
 
   return (
@@ -77,8 +80,7 @@ function Contact() {
           value={phone}
         />
         <div>
-
-        <Styled.Button>{isEditing ? "Salvar" : "Adicionar"}</Styled.Button>
+          <Styled.Button>{isEditing ? "Salvar" : "Adicionar"}</Styled.Button>
         </div>
       </Styled.Form>
       {/* Renderiza a lista de contatos */}
